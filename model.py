@@ -3,17 +3,20 @@ import csv
 import numpy as np
 from PIL import Image
 import random
-# import matplotlib.pyplot as plt
-# import matplotlib.image as mpimg
 
 def show(filename):
-
     img = Image.open('../data/IMG/' + filename)
     img.save('original.jpg')
 
+    right = Image.open('../data/IMG/' + filename.replace('center', 'right'))
+    right.save('right.jpg')
+
+    left = Image.open('../data/IMG/' + filename.replace('center', 'left'))
+    left.save('left.jpg')
+
     width, height = img.size
 
-    img1 = img.crop((width-70, height - 25, width, height))
+    img1 = img.crop((70, 25, width, height))
     img1.save('cropped.jpg')
 
     img2 = img1.convert('L')
@@ -87,5 +90,5 @@ model.add(Dense(1))
 
 model.summary()
 model.compile(loss='mse', optimizer='adam')
-model.fit(X_train, y_train, validation_split=0.2, shuffle=True, nb_epoch=30, verbose=1)
+model.fit(X_train, y_train, validation_split=0.2, shuffle=True, nb_epoch=20, verbose=1)
 model.save('model.h5')
